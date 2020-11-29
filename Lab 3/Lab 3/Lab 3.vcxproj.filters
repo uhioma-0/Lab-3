@@ -30,5 +30,8 @@
     <ClCompile Include="Task five.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Test six.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
