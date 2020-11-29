@@ -68,7 +68,14 @@ void delet(vector<string>* name)
 void print(vector<string>* name)
 {
 	for (int i = 0; i < ((*name).size()); i++)
-		cout << (*name)[i] << ",";
+	{
+		if (i == ((*name).size())-1)
+			cout << (*name)[i] << endl;
+		else
+			cout << (*name)[i] << ",";
+	}
+
+
 }
 
 void save(vector<string>* name)
