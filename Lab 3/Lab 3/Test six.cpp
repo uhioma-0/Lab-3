@@ -1,6 +1,7 @@
 #include <iostream> 
 #include<istream>
 #include <vector> 
+#include<string>
 #include <cstring>
 #include <fstream>
 using namespace std;
@@ -66,8 +67,8 @@ void delet(vector<string>* name)
 }
 void print(vector<string>* name)
 {
-	for (int i = 0; i < ((*name).size() - 1); i++)
-		cout << (*name)[i] << "," << endl;
+	for (int i = 0; i < ((*name).size()); i++)
+		cout << (*name)[i] << ",";
 }
 
 void save(vector<string>* name)
@@ -75,16 +76,17 @@ void save(vector<string>* name)
 	string fileLocation;
 	ofstream myfile;
 	cout << "enter the file location" << endl;
-	cin >> fileLocation;
+	cin.ignore();
+	getline(cin, fileLocation);
 	myfile.open(fileLocation, ios::trunc);
 	if (myfile.is_open())
 	{
-		for (int i = 0; i < ((*name).size() - 1); i++)
-			myfile << (*name)[i] << endl;
-		myfile.close();
+		for (int i = 0; i < (*name).size(); i++)
+			myfile << (*name)[i] <<"\n";
 	}
 	else
 		cout<<"connot open file for writing" << endl;
+	myfile.close();
 
 }
 void load(vector<string>* name)
@@ -92,27 +94,34 @@ void load(vector<string>* name)
 	string fileLocation;
 	ifstream myfile;
 	cout << "enter the file location" << endl;
-	cin >> fileLocation;
+	cin.ignore();
+	getline(cin, fileLocation);
+	initialise(name);
 	myfile.open(fileLocation);
-	int index = 0;
-	string line;
-	while (myfile)
+	if (myfile.is_open())
 	{
-		istream& getline(istream & myfile , string & line);
-		(*name)[index]==line;
-		myfile.close();
-		index += 1;
+			string line;
+			while (myfile)
+			{
+				getline(myfile,line);
+				(*name).push_back(line);
+			}
 	}
+	else
+		cout << "connot open file for reading" << endl;
+	myfile.close();
+	
 }
 
 int main()
 {
 	vector<string> name;
 	vector<string>* database = &name;
-	while (true)
+	bool printMenu = true;
+	while (printMenu==true)
 	{
 		string choice;
-		cout << "MENU : \n" << "initialise database \n" << "insert\n" << "search \n" << "delete\n" << "print\n"<< "save\n" << "load\n " << "quit\n" << "Make your choice :" << endl;
+		cout << "\nMENU : \n" << "initialise \n" << "insert\n" << "search \n" << "delete\n" << "print\n"<< "save\n" << "load\n " << "quit\n" << "Make your choice :" << endl;
 		cin >> choice;
 		if (choice == "initialise")
 			initialise(database);
@@ -143,6 +152,7 @@ int main()
 		}
 		if (choice == "quit") {
 			cout << "HAVE A GOOD DAY" << endl;
+			printMenu = false;
 			break;
 		}
 	}
